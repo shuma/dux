@@ -6,7 +6,8 @@ The whole point with Redux is to have one single source of truth for your applic
 
 Your application can subscribe to get notified when the store has changed. When Redux is used with React, it is the React components that get notified when state changes, and can re-render based on new content in the store.
 
-[image]
+![Redux](https://i.imgur.com/5kc68ZM.png "Redux")
+
 
 The store needs a way to know how to update the state in the store when it gets an Action. It uses a plain JavaScript function for this that Redux calls a reducer. The reducer function is passed in when the store is created.
 
