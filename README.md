@@ -21,3 +21,51 @@ The store needs a way to know how to update the state in the store when it gets 
 
 * To change something in the state, you need to dispatch an action: A action is a plain javascript object that describes what happend.
 * We write a function called a reducer - to tie state and actions together. It is just a function that takes state and action as argumentsand returns the next state of the app.
+
+**Dux code**
+```javascript
+
+function createStore(reducer, initialState) {
+  var currentReducer = reducer;
+  var currentState = initialState;
+  var listener = () => {};
+
+  return {
+    getState() {
+      return currentState;
+    },
+    dispatch(action) {
+      currentState = currentReducer(currentState, action);
+      listener();
+      return action;
+    },
+    subscribe(newListner) {
+      listener = newListner;
+    }
+  };
+}
+
+/** Counter reducer */
+function counter(state = 0, action) {
+  switch (action.type) {
+    case "INCREMENT":
+      return state + 1;
+    case "DECREMENT":
+      return state - 1;
+    default:
+      return state;
+  }
+}
+
+/** Create your store with the counter redux*/
+let store = createStore(counter);
+
+/** Subscribe to your store */
+store.subscribe(() => console.log(store.getState()));
+
+/** Dispatch actions to the store */
+store.dispatch({ type: "INCREMENT" });
+store.dispatch({ type: "INCREMENT" });
+store.dispatch({ type: "DECREMENT" });
+
+```
